@@ -1,0 +1,29 @@
+.profile-form-wrapper {
+  margin: 20px;
+}
+
+.profile-form-header {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.user-name-input {
+  margin: 0 0 20px 0;
+  background-color: #282c34;
+  border: 2px whitesmoke solid;
+  border-radius: 5px;
+  color: whitesmoke;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.profile-form-submit-button {
+  width: fit-content;
+  align-self: flex-end;
+}

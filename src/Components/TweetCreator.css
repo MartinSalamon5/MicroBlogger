@@ -1,0 +1,41 @@
+.tweet-input-container {
+  position: relative;
+  height: 180px;
+  width: 500px;
+  margin-top: 15px;
+}
+
+.tweet-input-area {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  background-color: #282c34;
+  border: white solid 2px;
+  border-radius: 5px;
+  color: white;
+  font-size: large;
+  resize: none;
+}
+
+.tweet-submit-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  width: 80px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.max-chars-alert {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  bottom: 56px;
+  left: 10px;
+  height: 10%;
+  width: 70%;
+  font-size: 15px;
+}

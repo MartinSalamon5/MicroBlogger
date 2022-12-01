@@ -1,0 +1,25 @@
+.tweet-box {
+  width: 500px;
+  background-color: #343a40;
+  margin: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tweet-box-header {
+  height: 10%;
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  color: grey;
+}
+
+.tweet-box-text {
+  font-size: 18px;
+  text-align: left;
+  margin: 10px;
+}
