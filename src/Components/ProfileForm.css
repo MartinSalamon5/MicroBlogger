@@ -27,3 +27,9 @@
   width: fit-content;
   align-self: flex-end;
 }
+
+@media only screen and (max-width: 400px) {
+  .profile-form {
+    width: 300px;
+  }
+}

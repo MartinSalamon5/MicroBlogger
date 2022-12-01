@@ -30,12 +30,6 @@ function ProfileForm() {
     setSavedUserName(userName);
   };
 
-  //   useEffect(() => {
-  //     setButtonState(false);
-  //     setSavenUsernameHandler();
-  //     // setSavedUserName(userName);
-  //   }, [user]);
-
   return (
     <div className="profile-form-wrapper">
       <h2 className="profile-form-header">Profile</h2>
