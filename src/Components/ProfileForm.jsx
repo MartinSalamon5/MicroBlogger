@@ -1,56 +1,82 @@
 import Button from "react-bootstrap/Button";
-import { useState, useEffect, useContext } from "react";
 import "./ProfileForm.css";
-import localforage from "localforage";
-import { TweetContext } from "../TweetContext";
+import { useContext, useRef } from "react";
+import { AuthContext } from "../AuthContext";
+import { auth, updateProfileCredentials } from "../firebase-config";
 
 function ProfileForm() {
-  const { userName, setUserName } = useContext(TweetContext);
-  const [savedUserName, setSavedUserName] = useState("");
-  const [buttonState, setButtonState] = useState();
+  const { userDisplayName, setUserDisplayName } = useContext(AuthContext);
+  console.log(userDisplayName);
+  const userNameRef = useRef();
 
-  useEffect(() => {
-    if (savedUserName == userName) {
-      setButtonState(true);
-    } else {
-      setButtonState(false);
-    }
-  }, [userName]);
-
-  console.log(savedUserName);
-
-  const setUserNameHandler = (e) => {
-    setUserName(e.target.value);
-  };
-
-  const saveUserNameToForage = () => {
-    localforage.setItem("userName", userName, () => {
-      setButtonState(true);
+  const saveButtonHandler = () => {
+    updateProfileCredentials(auth.currentUser, {
+      displayName: userNameRef.current.value,
+    }).then(() => {
+      setUserDisplayName(userNameRef.current.value);
+      alert("Profile was successfully updated");
     });
-    setSavedUserName(userName);
+    console.log(userNameRef.current.value);
   };
 
   return (
-    <div className="profile-form-wrapper">
-      <h2 className="profile-form-header">Profile</h2>
-      <form className="profile-form">
-        <h5 style={{ textAlign: "left", color: "lightgray" }}>User Name</h5>
-        <input
-          className="user-name-input"
-          value={userName}
-          onChange={setUserNameHandler}
-        ></input>
-        <Button
-          className="profile-form-submit-button"
-          onClick={() => {
-            saveUserNameToForage();
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h1 style={{ margin: "30px 0 0 0" }}>Profile</h1>
+      <div
+        style={{
+          border: "1.5px solid black",
+          margin: "20px 0 0 0",
+          borderRadius: "50%",
+          height: "100px",
+          width: "100px",
+          backgroundColor: "lightgrey",
+        }}
+      >
+        Image
+      </div>
+      <div>
+        <h5
+          style={{
+            margin: "20px 0 5px 0",
+            textAlign: "left",
+            alignSelf: "left",
+            width: "100%",
           }}
-          variant="primary"
-          disabled={buttonState}
         >
-          Save User
-        </Button>
-      </form>
+          Username:
+        </h5>
+        <input
+          style={{
+            width: "200px",
+            borderRadius: "5px",
+            backgroundColor: "lightgrey",
+            padding: "5px",
+            fontSize: "15px",
+          }}
+          defaultValue={userDisplayName}
+          type="text"
+          placeholder="Anonymous"
+          ref={userNameRef}
+        ></input>
+      </div>
+      <Button
+        onClick={saveButtonHandler}
+        variant="primary"
+        style={{
+          margin: "20px 0 0 0",
+          borderRadius: "20px",
+          padding: "5px 15px 5px 15px",
+          alignSelf: "center",
+        }}
+      >
+        Save
+      </Button>
     </div>
   );
 }

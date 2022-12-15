@@ -1,57 +1,43 @@
 import { useEffect, useState, createContext } from "react";
-import localforage from "localforage";
+import { db } from "./firebase-config";
+import { collection, getDocs } from "firebase/firestore";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 const TweetContext = createContext();
+const tweetsCollectionRef = collection(db, "tweets");
 
 function TweetContextProvider({ children }) {
+  const { isLoggedIn } = useContext(AuthContext);
   const [tweetArr, setTweetArr] = useState([]);
-  const [userName, setUserName] = useState("");
+
+  // const [userName, setUserName] = useState("");
 
   const getTweetsFromStorage = async () => {
     try {
-      const response = await fetch(
-        "https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet"
-      );
-      const tweetStorage = await response.json();
-      const storedTweetArray = tweetStorage.tweets;
-      setTweetArr(storedTweetArray);
-      console.log(storedTweetArray);
+      const data = await getDocs(tweetsCollectionRef);
+      const docs = data.docs;
+      setTweetArr(docs.map((doc) => ({ ...doc.data() })));
     } catch (err) {
       alert("Server is offline.");
     }
   };
 
-  const getUserNameFromForage = () => {
-    localforage
-      .getItem("userName")
-      .then((value) => {
-        if (value === null) {
-          setUserName("No Username");
-        } else {
-          setUserName(value);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
-    getUserNameFromForage();
-    getTweetsFromStorage();
-    const refreshInterval = setInterval(() => {
+    if (isLoggedIn != null) {
       getTweetsFromStorage();
-    }, 5000);
-    return () => clearInterval(refreshInterval);
-  }, []);
+      const refreshInterval = setInterval(() => {
+        getTweetsFromStorage();
+      }, 5000);
+      return () => clearInterval(refreshInterval);
+    }
+  }, [isLoggedIn]);
 
   return (
-    <TweetContext.Provider
-      value={{ tweetArr, setTweetArr, userName, setUserName }}
-    >
+    <TweetContext.Provider value={{ tweetArr, setTweetArr }}>
       {children}
     </TweetContext.Provider>
   );
 }
 
-export { TweetContext, TweetContextProvider };
+export { TweetContext, TweetContextProvider, tweetsCollectionRef };

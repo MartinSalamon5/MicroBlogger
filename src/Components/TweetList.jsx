@@ -7,7 +7,7 @@ function TweetList() {
   const { tweetArr } = useContext(TweetContext);
 
   tweetArr.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
+    return b.date.toDate() - a.date.toDate();
   });
 
   return (

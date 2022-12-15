@@ -3,11 +3,11 @@ import TweetList from "../Components/TweetList";
 
 function Home() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <TweetCreator />
-        <TweetList />
-      </header>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <TweetCreator />
+      <TweetList />
     </div>
   );
 }

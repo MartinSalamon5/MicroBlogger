@@ -2,11 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import "./TweetCreator.css";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import { TweetContext } from "../TweetContext";
+import { TweetContext, tweetsCollectionRef } from "../TweetContext";
 import Spinner from "react-bootstrap/Spinner";
+import { addDoc, Timestamp } from "firebase/firestore";
+import { AuthContext } from "../AuthContext";
 
 function TweetCreator() {
-  const { tweetArr, setTweetArr, userName } = useContext(TweetContext);
+  const { tweetArr, setTweetArr } = useContext(TweetContext);
+  const { userDisplayName } = useContext(AuthContext);
+
   const [tweet, setTweet] = useState("");
   const [buttonState, setButtonState] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -43,29 +47,25 @@ function TweetCreator() {
   const postTweetToServer = async (tweetObject) => {
     try {
       setShowSpinner(true);
-      const response = await fetch(
-        "https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(tweetObject),
-        }
-      );
-      const json = await response.json();
-      setTweetArr([...tweetArr, json]);
+      await addDoc(tweetsCollectionRef, {
+        content: tweetObject.content,
+        userName: tweetObject.userName,
+        date: tweetObject.date,
+      });
+      setTweetArr([...tweetArr, tweetObject]);
       setShowSpinner(false);
-      console.log(json);
     } catch (err) {
       alert("Post was unsuccessful.");
+      setShowSpinner(false);
     }
   };
 
   const createTweet = (content) => {
     const dateObject = new Date();
-    const date = dateObject.toISOString();
+    const date = Timestamp.fromDate(dateObject);
     const tweetObject = {
       content: content,
-      userName: userName,
+      userName: userDisplayName,
       date: date,
     };
     postTweetToServer(tweetObject);
