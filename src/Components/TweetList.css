@@ -1,7 +1,13 @@
 .tweet-list {
-  margin-top: 15px;
+  margin-top: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media only screen and (max-width: 450px) {
+  .tweet-list {
+    width: 86%;
+  }
 }

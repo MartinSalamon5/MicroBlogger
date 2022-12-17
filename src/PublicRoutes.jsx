@@ -7,17 +7,21 @@ import { AuthContext } from "./AuthContext";
 function PublicRoutes() {
   const { isLoggedIn } = useContext(AuthContext);
 
-  return (
-    <Routes>
-      <Route
-        index
-        path="/login"
-        element={isLoggedIn ? <Navigate replace to="/home" /> : <Login />}
-      />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={<Navigate replace to="/login" />} />
-    </Routes>
-  );
+  if (isLoggedIn === null) {
+    return null;
+  } else {
+    return (
+      <Routes>
+        <Route
+          index
+          path="/login"
+          element={isLoggedIn ? <Navigate replace to="/home" /> : <Login />}
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<Navigate replace to="/login" />} />
+      </Routes>
+    );
+  }
 }
 
 export default PublicRoutes;

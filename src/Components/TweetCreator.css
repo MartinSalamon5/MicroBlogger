@@ -1,5 +1,5 @@
 .tweet-input-container {
-  position: relative;
+  position: fixed;
   height: 180px;
   width: 500px;
   margin-top: 15px;
@@ -15,6 +15,10 @@
   color: white;
   font-size: large;
   resize: none;
+}
+.tweet-input-area:hover {
+  cursor: pointer;
+  background-color: #414755;
 }
 
 .tweet-submit-button {
@@ -41,6 +45,6 @@
 }
 @media only screen and (max-width: 450px) {
   .tweet-input-container {
-    width: 110%;
+    width: 90%;
   }
 }

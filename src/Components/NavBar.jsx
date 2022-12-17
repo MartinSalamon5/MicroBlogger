@@ -46,51 +46,55 @@ function NavBar() {
     setSignUpError(null);
   };
 
-  return (
-    <Navbar
-      bg="dark"
-      variant="dark"
-      className="w-100 p-1 px-5 fs-5"
-      style={{ borderRadius: "0 0 10px 10px" }}
-      sticky="top"
-    >
-      <Nav className="me-auto">
-        {topLinks.map((item) => (
-          <NavLink
-            onClick={removeError}
-            style={({ isActive }) => ({
-              color: "white",
-              margin: "20px 30px 20px 30px",
-              textDecoration: isActive ? "underline" : "none",
-            })}
-            to={item.path}
-            key={item.name}
-          >
-            {item.name}
-          </NavLink>
-        ))}
-        {isLoggedIn ? (
-          <Button
-            onClick={logOutUser}
-            variant="primary"
-            style={{
-              height: "30px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              position: "absolute",
-              right: "30px",
-              top: "26px",
-            }}
-          >
-            Logout
-          </Button>
-        ) : (
-          <div>{null}</div>
-        )}
-      </Nav>
-    </Navbar>
-  );
+  if (isLoggedIn === null) {
+    return null;
+  } else {
+    return (
+      <Navbar
+        bg="dark"
+        variant="dark"
+        className="w-100 p-1 px-5 fs-5"
+        style={{ borderRadius: "0 0 10px 10px" }}
+        sticky="top"
+      >
+        <Nav className="me-auto">
+          {topLinks.map((item) => (
+            <NavLink
+              onClick={removeError}
+              style={({ isActive }) => ({
+                color: "white",
+                margin: "20px 30px 20px 30px",
+                textDecoration: isActive ? "underline" : "none",
+              })}
+              to={item.path}
+              key={item.name}
+            >
+              {item.name}
+            </NavLink>
+          ))}
+          {isLoggedIn ? (
+            <Button
+              onClick={logOutUser}
+              variant="primary"
+              style={{
+                height: "30px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                position: "absolute",
+                right: "30px",
+                top: "26px",
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <div>{null}</div>
+          )}
+        </Nav>
+      </Navbar>
+    );
+  }
 }
 
 export default NavBar;

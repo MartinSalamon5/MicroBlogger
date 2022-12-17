@@ -12,10 +12,11 @@ import {
 const AuthContext = createContext();
 
 function AuthContextProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [signUpError, setSignUpError] = useState(null);
   const [userDisplayName, setUserDisplayName] = useState("");
+  const [userID, setUserID] = useState(null);
 
   const signUserOut = () => {
     signMeOut(auth).then(() => {
@@ -36,7 +37,12 @@ function AuthContextProvider({ children }) {
   useEffect(() => {
     authStateChange(auth, (currentUser) => {
       if (currentUser) {
-        setUserDisplayName(currentUser.displayName);
+        setUserID(currentUser.uid);
+        if (currentUser.displayName) {
+          setUserDisplayName(currentUser.displayName);
+        } else {
+          setUserDisplayName("Anonymous");
+        }
       } else {
         setUserDisplayName("");
       }
@@ -117,6 +123,7 @@ function AuthContextProvider({ children }) {
         setUserDisplayName,
         isLoggedIn,
         signUserOut,
+        userID,
       }}
     >
       {children}

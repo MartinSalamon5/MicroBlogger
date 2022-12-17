@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
@@ -38,3 +39,4 @@ export const authStateChange = onAuthStateChanged;
 export const userPersistence = setPersistence;
 export const fullPersistence = browserLocalPersistence;
 export const signMeOut = signOut;
+export const storage = getStorage(app);

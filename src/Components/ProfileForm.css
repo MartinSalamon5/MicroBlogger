@@ -1,35 +1,15 @@
-.profile-form-wrapper {
-  margin: 20px;
-}
-
-.profile-form-header {
-  text-align: left;
-  margin: 20px 0;
-}
-
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-}
-
-.user-name-input {
-  margin: 0 0 20px 0;
-  background-color: #282c34;
-  border: 2px whitesmoke solid;
-  border-radius: 5px;
-  color: whitesmoke;
-  padding: 10px;
-  font-size: 18px;
-}
-
-.profile-form-submit-button {
-  width: fit-content;
-  align-self: flex-end;
+.profile-pic {
+  border: 5px solid #47536b;
+  margin: 20px 0 0 0;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
 }
 
 @media only screen and (max-width: 450px) {
-  .profile-form {
-    width: 300px;
+  .profile-pic {
+    height: 200px;
+    width: 200px;
   }
 }
